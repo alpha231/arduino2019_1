@@ -1,9 +1,9 @@
 #include "DHT.h"
 
-#define PIN 2
+#define PIN A1
 #define DHTTYPE DHT11
 
-DHT dht(A1, DHT11);
+DHT dht(PIN, DHTTYPE);
 int button=0;
 int n=0;
 
@@ -22,8 +22,8 @@ void setup() {
 }
 
 void loop() {
-  /*button+=digitalRead(A2);
-  if(button==3) button=0;*/
+  button+=digitalRead(A2);
+  if(button==3) button=0;
 
   int h = dht.readHumidity();
   
@@ -32,22 +32,22 @@ void loop() {
   int sensorValue = analogRead(A0);
   float l = (100-(sensorValue * 100.0) / 1023.0);
   
-  /*switch(button){
+  switch(button){
     case 0:
     n=h;
     Serial.println(digitalRead(A2));
     break;
     
-    case 1:*/
-    n=l;
-    /*Serial.println(digitalRead(A2));
-    break;
-    
-    case 2:
+    case 1:
     n=l;
     Serial.println(digitalRead(A2));
     break;
-  }*/
+    
+    case 2:
+    n=t;
+    Serial.println(digitalRead(A2));
+    break;
+  }
   
   if((n>=0&&n<=9) || n%10==0){
     if(n%10==0){
