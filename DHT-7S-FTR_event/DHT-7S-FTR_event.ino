@@ -48,18 +48,21 @@ bool Temp() {
   return true;
 }
 void ReadHumidity() {
-  int n = dht.readHumidity();
+  int n = 0;
+  n = dht.readHumidity();
   Serial.println(n);
   Display(n);
 }
 void ReadLight() {
   int sensorValue = analogRead(PINlight);
-  float l = (100-(sensorValue * 100.0) / 1023.0);
+  float l = 0;
+  l = (100-(sensorValue * 100.0) / 1023.0);
   Serial.println(l);
   Display(l);
 }
 void ReadTemp() {
-  int n = dht.readTemperature();
+  int n = 0;
+  n = dht.readTemperature();
   Serial.println(n);
   Display(n);
 }
