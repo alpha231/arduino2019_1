@@ -1,10 +1,13 @@
 #include <DHT.h>
 #include <Eventually.h>
 
-#define PIN A1
+#define PINlight A0
+#define PINdht A1
+#define PINbutton A2
+#define PINled A3
 #define DHTTYPE DHT11
 
-DHT dht(PIN, DHTTYPE);
+DHT dht(PINdht, DHTTYPE);
 EvtManager mgr;
 
 void setup() {
@@ -16,27 +19,32 @@ void setup() {
   pinMode(5, OUTPUT);
   pinMode(6, OUTPUT);
   pinMode(7, OUTPUT);
-  pinMode(A2, INPUT);
+  pinMode(PINlight, INPUT);
+  pinMode(PINbutton, INPUT);
+  pinMode(PINled, OUTPUT);
   Serial.begin(9600);
   dht.begin();
   Humedad();
 }
 bool Humedad() {
   mgr.resetContext();
-  mgr.addListener(new EvtTimeListener(300, true, (EvtAction)ReadHumidity));
-  mgr.addListener(new EvtPinListener(A2, (EvtAction)Luz));
+  mgr.addListener(new EvtTimeListener(500, true, (EvtAction)ReadHumidity));
+  mgr.addListener(new EvtPinListener(PINbutton, (EvtAction)Luz));
+  BlinkLed();
   return true;
 }
 bool Luz() {
   mgr.resetContext();
   mgr.addListener(new EvtTimeListener(1000, true, (EvtAction)ReadLight));
-  mgr.addListener(new EvtPinListener(A2, (EvtAction)Temp));
+  mgr.addListener(new EvtPinListener(PINbutton, (EvtAction)Temp));
+  BlinkLed();
   return true;
 }
 bool Temp() {
   mgr.resetContext();
   mgr.addListener(new EvtTimeListener(500, true, (EvtAction)ReadTemp));
-  mgr.addListener(new EvtPinListener(A2, (EvtAction)Humedad));
+  mgr.addListener(new EvtPinListener(PINbutton, (EvtAction)Humedad));
+  BlinkLed();
   return true;
 }
 void ReadHumidity() {
@@ -45,7 +53,7 @@ void ReadHumidity() {
   Display(n);
 }
 void ReadLight() {
-  int sensorValue = analogRead(A0);
+  int sensorValue = analogRead(PINlight);
   float l = (100-(sensorValue * 100.0) / 1023.0);
   Serial.println(l);
   Display(l);
@@ -54,6 +62,12 @@ void ReadTemp() {
   int n = dht.readTemperature();
   Serial.println(n);
   Display(n);
+}
+void BlinkLed(){
+  //delay(1000);
+  digitalWrite(PINled, HIGH);
+  delay(100);
+  digitalWrite(PINled, LOW);
 }
 void Display(int n) {
   if ((n >= 0 && n <= 9) || n % 10 == 0) {
