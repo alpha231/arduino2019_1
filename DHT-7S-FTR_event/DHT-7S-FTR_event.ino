@@ -8,26 +8,34 @@ DHT dht(PIN, DHTTYPE);
 EvtManager mgr;
 
 void setup() {
+  pinMode(0, OUTPUT);
+  pinMode(1, OUTPUT);
+  pinMode(2, OUTPUT);
+  pinMode(3, OUTPUT);
+  pinMode(4, OUTPUT);
+  pinMode(5, OUTPUT);
+  pinMode(6, OUTPUT);
+  pinMode(7, OUTPUT);
   pinMode(A2, INPUT);
-  Serial.begin(1200);
+  Serial.begin(9600);
   dht.begin();
   Humedad();
 }
 bool Humedad() {
   mgr.resetContext();
-  mgr.addListener(new EvtTimeListener(250, true, (EvtAction)ReadHumidity));
+  mgr.addListener(new EvtTimeListener(300, true, (EvtAction)ReadHumidity));
   mgr.addListener(new EvtPinListener(A2, (EvtAction)Luz));
   return true;
 }
 bool Luz() {
   mgr.resetContext();
-  mgr.addListener(new EvtTimeListener(250, true, (EvtAction)ReadLight));
+  mgr.addListener(new EvtTimeListener(1000, true, (EvtAction)ReadLight));
   mgr.addListener(new EvtPinListener(A2, (EvtAction)Temp));
   return true;
 }
 bool Temp() {
   mgr.resetContext();
-  mgr.addListener(new EvtTimeListener(250, true, (EvtAction)ReadTemp));
+  mgr.addListener(new EvtTimeListener(500, true, (EvtAction)ReadTemp));
   mgr.addListener(new EvtPinListener(A2, (EvtAction)Humedad));
   return true;
 }
@@ -189,5 +197,4 @@ void Display(int n) {
     }
   }
 }
-
-  USE_EVENTUALLY_LOOP(mgr)
+USE_EVENTUALLY_LOOP(mgr)
