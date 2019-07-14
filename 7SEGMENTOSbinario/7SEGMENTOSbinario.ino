@@ -1,11 +1,11 @@
-#define A_1 0
-#define B_1 1
-#define C_1 2
-#define D_1 3
-#define A_2 4
-#define B_2 5
-#define C_2 6
-#define D_2 7
+#define A_1 3
+#define B_1 0
+#define C_1 1
+#define D_1 2
+#define A_2 11
+#define B_2 8
+#define C_2 9
+#define D_2 10
 
 void setup() {
   pinMode(A_1, OUTPUT);

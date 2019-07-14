@@ -1,19 +1,19 @@
 #include <DHT.h>
 #include <Eventually.h>
 
-#define PINlight A0
-#define PINdht A1
-#define PINbutton A2
-#define PINled A3
+#define PINlight A4
+#define PINdht A2
+#define PINbutton A3
+#define PINled A5 
 
-#define A_1 0
-#define B_1 1
-#define C_1 2
-#define D_1 3
-#define A_2 4
-#define B_2 5
-#define C_2 6
-#define D_2 7
+#define A_1 3
+#define B_1 0
+#define C_1 1
+#define D_1 2
+#define A_2 11
+#define B_2 8
+#define C_2 9
+#define D_2 10
 
 #define DHTTYPE DHT11
 
