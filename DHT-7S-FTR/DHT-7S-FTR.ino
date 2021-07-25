@@ -19,6 +19,8 @@
 DHT dht(PINdht, DHTTYPE);
 int button=0;
 int n=0;
+int buttonState = 0;         // current state of the button
+int lastButtonState = 0;     // previous state of the button
 
 void setup() {
   pinMode(A_1, OUTPUT);
@@ -37,6 +39,22 @@ void setup() {
 }
 
 void loop() {
+  // read the pushbutton input pin:
+  buttonState = digitalRead(PINbutton);
+
+  // compare the buttonState to its previous state
+  if (buttonState != lastButtonState) {
+    // if the state has changed, increment the counter
+    if (buttonState == HIGH) {
+      // if the current state is HIGH then the button went from off to on:
+      button++;
+      if(button==3) button=0;
+    }
+  }
+  // save the current state as the last state, for next time through the loop
+  lastButtonState = buttonState;
+
+  
   button+=digitalRead(PINbutton);
   if(button==3) button=0;
 
